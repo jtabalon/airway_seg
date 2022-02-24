@@ -6,5 +6,5 @@ Environment name: tf_airway
 - Tensorflow: 2.4.1 
 - nibabel: 3.2.2
 - tqdm: 4.62.3
-
+- voxelmorph: `pip3 install voxelmorph`
 
