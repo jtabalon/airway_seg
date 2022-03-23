@@ -7,3 +7,5 @@ Ran into a bit of trouble regarding the data generator... how do we decide what 
 Does Kyle's approach not work?
 - Makes sense to not use `argmax`, but at the other end of things if there's only one voxel in the whole patch does that suffice?
 - What should the threshold be if this is the case?
+
+
