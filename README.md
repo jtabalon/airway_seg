@@ -8,4 +8,5 @@ Does Kyle's approach not work?
 - Makes sense to not use `argmax`, but at the other end of things if there's only one voxel in the whole patch does that suffice?
 - What should the threshold be if this is the case?
 
-
+Validated the Data Generator with Kyle.
+- Now need to make it a function.
