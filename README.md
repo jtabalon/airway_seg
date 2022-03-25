@@ -10,3 +10,4 @@ Does Kyle's approach not work?
 
 Validated the Data Generator with Kyle.
 - Now need to make it a function.
+- ideally next deliverable is a full single run.
