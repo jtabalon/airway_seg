@@ -1,5 +1,14 @@
 # airway_seg
 
+Generally important information:
+- 0 -> patient
+- 1 -> row
+- 2 -> column
+- 3 -> slice
+- 4 -> channel
+
+
+
 # 22 March 2022
 
 Ran into a bit of trouble regarding the data generator... how do we decide what passes as a patch?
@@ -11,3 +20,4 @@ Does Kyle's approach not work?
 Validated the Data Generator with Kyle.
 - Now need to make it a function.
 - ideally next deliverable is a full single run.
+
