@@ -7,7 +7,9 @@ Generally important information:
 - 3 -> slice
 - 4 -> channel
 
-
+Hounsfield unit are -2000-2000 so it's a nice number
+- regarding standardizing image...
+- ONLY divide IMAGE (not mask)
 
 # 22 March 2022
 
