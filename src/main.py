@@ -24,16 +24,13 @@ Custom Imports
 """
 
 from data_generator import data_generator
-
-
-
-
-
+from model_architectures import unet
 
 
 def main(args):
     # TODO: Read in ids
     # TODO: model architecture
+
     # TODO: hyperparameters
     # TODO: compile model
     # TODO: dice loss
