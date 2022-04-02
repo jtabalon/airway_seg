@@ -9,7 +9,7 @@ import tensorflow as tf
 from tensorflow.keras import Input
 
 
-def unet(pretrained_weights = None,input_size = (256,256,1)):
+def unet(input_size = (256,256,1)):
     inputs = Input(input_size)
     conv1 = Conv3D(64, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(inputs)
     conv1 = Conv3D(64, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(conv1)
