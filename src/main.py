@@ -23,18 +23,21 @@ from tensorflow.keras import Input
 Custom Imports
 """
 
-from data_generator import data_generator
+from data_loader import data_generator, get_ids
 from model_architectures import unet
-
+from losses import dice_loss
+# TODO: Add file for file paths
 
 def main(args):
     # TODO: Read in ids
+    train_ids = get_ids()
     # TODO: model architecture
     model = unet(input_size=(64,64,64,1))
 
     # TODO: hyperparameters
     # TODO: compile model
     # TODO: dice loss
+    model.compile(optimizer=Adam(lr=learning_rate), loss=dice_loss)
     # TODO: Callbacks + model.fit
 
     # data_gen = data_generator(ids=)
