@@ -30,6 +30,7 @@ from model_architectures import unet
 def main(args):
     # TODO: Read in ids
     # TODO: model architecture
+    model = unet(input_size=(64,64,64,1))
 
     # TODO: hyperparameters
     # TODO: compile model
@@ -42,7 +43,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default=) # TODO: Add default directory
+    # parser.add_argument('--data_dir', type=str, default=) # TODO: Add default directory
     args = parser.parse_args()
 
     main(args)
