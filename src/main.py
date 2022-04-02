@@ -32,13 +32,20 @@ from data_generator import data_generator
 
 
 def main(args):
+    # TODO: Read in ids
+    # TODO: model architecture
+    # TODO: hyperparameters
+    # TODO: compile model
+    # TODO: dice loss
+    # TODO: Callbacks + model.fit
+
     # data_gen = data_generator(ids=)
 
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default=) # Add default directory
+    parser.add_argument('--data_dir', type=str, default=) # TODO: Add default directory
     args = parser.parse_args()
 
     main(args)
