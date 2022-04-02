@@ -1,13 +1,5 @@
 import tensorflow as tf
-# from tensorflow.keras import layers
-# from tensorflow.keras.models import Model
-# from tensorflow.keras.models import *
-# from tensorflow.keras.layers import *
-# from tensorflow.keras.optimizers import *
-# from tensorflow.keras.callbacks import ModelCheckpoint, LearningRateScheduler
-# from tensorflow.keras import backend as keras
 from tensorflow.keras import Input
-
 
 def unet(input_size = (256,256,1)):
     inputs = Input(input_size)
