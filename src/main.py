@@ -31,16 +31,17 @@ from model_architectures import unet
 # TODO: Add file for file paths
 
 def main(args):
-    # Read in patient ids
+    # read in patient ids
     train_ids = get_ids(TRAIN_IDS_PATH)
     valid_ids = get_ids(VALID_IDS_PATH)
+
     # TODO: model architecture
-    model = unet(input_size=(64,64,64,1))
+    # model = unet(input_size=(64,64,64,1))
 
     # TODO: hyperparameters
     # TODO: compile model
     # TODO: dice loss
-    model.compile(optimizer=Adam(lr=learning_rate), loss=dice_loss)
+    # model.compile(optimizer=Adam(lr=learning_rate), loss=dice_loss)
     # TODO: Callbacks + model.fit
 
     train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, batch_size=1, patch_size=64)
