@@ -31,6 +31,11 @@ from model_architectures import unet
 # TODO: Add file for file paths
 
 def main(args):
+    # TODO: hyperparameters
+    # if args.use_json:
+
+
+
     # Read in patient ids
     train_ids = get_ids(TRAIN_IDS_PATH)
     valid_ids = get_ids(VALID_IDS_PATH)
@@ -38,7 +43,6 @@ def main(args):
     # Declare model architecture
     model = unet(input_size=MODEL_INPUT_SIZE)
 
-    # TODO: hyperparameters
     # TODO: compile model
     # TODO: dice loss
     # model.compile(optimizer=Adam(lr=learning_rate), loss=dice_loss)
@@ -51,6 +55,8 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    # TODO: Configure argument parser
+    parser.add_argument('--use_json', type=bool, default=False)
     # parser.add_argument('--data_dir', type=str, default=) # TODO: Add default directory
     args = parser.parse_args()
 
