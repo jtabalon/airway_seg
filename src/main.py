@@ -28,7 +28,8 @@ def main(args):
     # TODO: hyperparameters
     # TODO: using json file
     # if args.use_json_file:
-    #     with open(args.use_json_file, "r") as read_file:
+    #     json_file = str(args.use_json_file)
+    #     with open(json_file, "r") as read_file:
     #         params = json.load(read_file)
     #         patch_size = params["patch_size"]
     #         batch_size = params["batch_size"]
@@ -38,8 +39,8 @@ def main(args):
     patch_size = args.patch_size
     batch_size = args.batch_size
     learning_rate = args.learning_rate
-    # num_epochs = args.num_epochs
-    print(patch_size, batch_size, learning_rate)
+    num_epochs = args.num_epochs
+    print(patch_size, batch_size, learning_rate, num_epochs)
 
     # Read in patient ids
     train_ids = get_ids(TRAIN_IDS_PATH)
