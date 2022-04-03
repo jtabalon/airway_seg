@@ -31,7 +31,7 @@ from model_architectures import unet
 # TODO: Add file for file paths
 
 def main(args):
-    # TODO: Read in ids
+    # Read in patient ids
     train_ids = get_ids(TRAIN_IDS_PATH)
     valid_ids = get_ids(VALID_IDS_PATH)
     # TODO: model architecture
