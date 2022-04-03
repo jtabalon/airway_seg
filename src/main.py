@@ -23,7 +23,7 @@ from tensorflow.keras import Input
 Custom Imports
 """
 
-from constant import
+from constant import TRAIN_IDS_PATH, VALID_IDS_PATH, TRAIN_DIR, VALID_DIR
 from data_loader import data_generator, get_ids
 from losses import dice_loss
 from model_architectures import unet
@@ -32,7 +32,8 @@ from model_architectures import unet
 
 def main(args):
     # TODO: Read in ids
-    train_ids = get_ids()
+    train_ids = get_ids(TRAIN_IDS_PATH)
+    valid_ids = get_ids(VALID_IDS_PATH)
     # TODO: model architecture
     model = unet(input_size=(64,64,64,1))
 
@@ -42,7 +43,8 @@ def main(args):
     model.compile(optimizer=Adam(lr=learning_rate), loss=dice_loss)
     # TODO: Callbacks + model.fit
 
-    # data_gen = data_generator(ids=)
+    train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, batch_size=1, patch_size=64)
+    valid_generator = data_generator(ids=valid_ids, data_dir=VALID_DIR, batch_size=1, patch_size=64)
 
 
 
