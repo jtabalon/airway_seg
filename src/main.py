@@ -36,7 +36,8 @@ def main(args):
     valid_ids = get_ids(VALID_IDS_PATH)
 
     # TODO: model architecture
-    # model = unet(input_size=(64,64,64,1))
+    model = unet(input_size=(64,64,64,1))
+    print(model)
 
     # TODO: hyperparameters
     # TODO: compile model
