@@ -7,4 +7,8 @@ Environment name: tf_airway
 - nibabel: 3.2.2
 - tqdm: 4.62.3
 - voxelmorph: `pip3 install voxelmorph`
+- os
+- argparse
+- json
+
 
