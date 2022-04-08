@@ -73,4 +73,4 @@ def data_generator(ids, data_dir, batch_size=1, patch_size=64):
             final_patch_img = tf.convert_to_tensor(patch_img)
             final_patch_mask = tf.convert_to_tensor(patch_mask)
 
-            yield [final_patch_img, final_patch_mask]
+            yield (final_patch_img, final_patch_mask)

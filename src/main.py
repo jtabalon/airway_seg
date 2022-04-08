@@ -76,20 +76,19 @@ def main(args):
         validation_freq=valid_freq, \
         steps_per_epoch = train_steps, \
         epochs=num_epochs, \
-        callbacks=[callbacks])
+        callbacks=callbacks)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # TODO: Configure argument parser
-    # TODO: Alphabetize arguments.
-    parser.add_argument("-json", '--use_json_file', type=str, default=PARAMS_PATH)
-    parser.add_argument("-p", "--patch_size", type=int, default=64)
     parser.add_argument("-bs", "--batch_size", type=int, default=1)
-    parser.add_argument("-lr", "--learning_rate", type=int, default=1e-4)
     parser.add_argument("-d", "--data_dir", type=str, default=DATA_DIR)
+    parser.add_argument("-lr", "--learning_rate", type=int, default=1e-4)
     parser.add_argument("-n", "--num_epochs", type=int, default=1000)
-    parser.add_argument("-f", "--valid_freq", type=int, default=5)
+    parser.add_argument("-p", "--patch_size", type=int, default=64)
     parser.add_argument("-t", "--train_steps", type=int, default=2000)
+    parser.add_argument("-json", '--use_json_file', type=str, default=PARAMS_PATH)
+    parser.add_argument("-f", "--valid_freq", type=int, default=5)
     parser.add_argument("-v", "--valid_steps", type=int, default=400)
 
     args = parser.parse_args()
