@@ -83,7 +83,7 @@ if __name__ == "__main__":
     # TODO: Configure argument parser
     parser.add_argument("-bs", "--batch_size", type=int, default=1)
     parser.add_argument("-d", "--data_dir", type=str, default=DATA_DIR)
-    parser.add_argument("-lr", "--learning_rate", type=int, default=1e-4)
+    parser.add_argument("-lr", "--learning_rate", type=float, default=1e-4)
     parser.add_argument("-n", "--num_epochs", type=int, default=1000)
     parser.add_argument("-p", "--patch_size", type=int, default=64)
     parser.add_argument("-t", "--train_steps", type=int, default=2000)
