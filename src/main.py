@@ -21,7 +21,9 @@ from tensorflow.keras import Input
 
 from constant import TRAIN_IDS_PATH, VALID_IDS_PATH, TRAIN_DIR, VALID_DIR, MODEL_INPUT_SIZE, PARAMS_PATH, DATA_DIR, CKPT_PATH
 from data_loader import data_generator, get_ids
+from callbacks import model_checkpoint_callback
 from losses import dice_loss
+
 from model_architectures import unet
 
 def main(args):
@@ -56,6 +58,8 @@ def main(args):
 
     train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, batch_size=batch_size, patch_size=patch_size)
     valid_generator = data_generator(ids=valid_ids, data_dir=VALID_DIR, batch_size=batch_size, patch_size=patch_size)
+
+
 
     model.fit(x=train_generator, \
       validation_data=valid_generator, \
