@@ -79,6 +79,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # TODO: Configure argument parser
+    # TODO: Alphabetize arguments.
     parser.add_argument("-json", '--use_json_file', type=str, default=PARAMS_PATH)
     parser.add_argument("-p", "--patch_size", type=int, default=64)
     parser.add_argument("-bs", "--batch_size", type=int, default=1)
