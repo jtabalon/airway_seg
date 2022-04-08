@@ -42,7 +42,11 @@ def main(args):
     batch_size = args.batch_size
     learning_rate = args.learning_rate
     num_epochs = args.num_epochs
-    print(patch_size, batch_size, learning_rate, num_epochs)
+    train_steps = args.train_steps
+    valid_freq = args.valid_freq
+    valid_steps = args.valid_steps
+
+    print(patch_size, batch_size, learning_rate, num_epochs, train_steps, valid_freq, valid_steps)
 
     # Read in patient ids
     train_ids = get_ids(TRAIN_IDS_PATH)
@@ -59,15 +63,15 @@ def main(args):
     train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, batch_size=batch_size, patch_size=patch_size)
     valid_generator = data_generator(ids=valid_ids, data_dir=VALID_DIR, batch_size=batch_size, patch_size=patch_size)
 
-
+    callbacks = model_checkpoint_callback(CKPT_PATH)
 
     model.fit(x=train_generator, \
       validation_data=valid_generator, \
-      validation_steps=400 \
-      validation_freq=5, \
-      steps_per_epoch = 2000, \
+      validation_steps=valid_steps, \
+      validation_freq=valid_freq, \
+      steps_per_epoch = train_steps, \
       epochs=num_epochs, \
-      callbacks=[model_checkpoint_callback])
+      callbacks=[callbacks])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -78,8 +82,11 @@ if __name__ == "__main__":
     parser.add_argument("-lr", "--learning_rate", type=int, default=1e-4)
     parser.add_argument("-d", "--data_dir", type=str, default=DATA_DIR)
     parser.add_argument("-n", "--num_epochs", type=str, default=1000)
+    parser.add_argument("-f", "--valid_freq", type=int, default=5)
+    parser.add_argument("-n", "--num_epochs", type=int, default=1000)
+    parser.add_argument("-t", "--train_steps", type=int, default=2000)
+    parser.add_argument("-v", "--valid_steps", type=int, default=400)
 
-    # parser.add_argument('--data_dir', type=str, default=) # TODO: Add default directory
     args = parser.parse_args()
 
     main(args)
