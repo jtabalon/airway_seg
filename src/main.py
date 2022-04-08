@@ -19,7 +19,7 @@ from tensorflow.keras import Input
 
 # Custom Imports
 
-from constant import TRAIN_IDS_PATH, VALID_IDS_PATH, TRAIN_DIR, VALID_DIR, MODEL_INPUT_SIZE, PARAMS_PATH, DATA_DIR
+from constant import TRAIN_IDS_PATH, VALID_IDS_PATH, TRAIN_DIR, VALID_DIR, MODEL_INPUT_SIZE, PARAMS_PATH, DATA_DIR, CKPT_PATH
 from data_loader import data_generator, get_ids
 from losses import dice_loss
 from model_architectures import unet
@@ -56,6 +56,14 @@ def main(args):
 
     train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, batch_size=batch_size, patch_size=patch_size)
     valid_generator = data_generator(ids=valid_ids, data_dir=VALID_DIR, batch_size=batch_size, patch_size=patch_size)
+
+    model.fit(x=train_generator, \
+      validation_data=valid_generator, \
+      validation_steps=400 \
+      validation_freq=5, \
+      steps_per_epoch = 2000, \
+      epochs=num_epochs, \
+      callbacks=[model_checkpoint_callback])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
