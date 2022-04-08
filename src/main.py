@@ -27,6 +27,8 @@ from losses import dice_loss
 from model_architectures import unet
 
 def main(args):
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     # TODO: hyperparameters
     # TODO: using json file
     # if args.use_json_file:
@@ -65,13 +67,14 @@ def main(args):
 
     callbacks = model_checkpoint_callback(CKPT_PATH)
 
-    model.fit(x=train_generator, \
-      validation_data=valid_generator, \
-      validation_steps=valid_steps, \
-      validation_freq=valid_freq, \
-      steps_per_epoch = train_steps, \
-      epochs=num_epochs, \
-      callbacks=[callbacks])
+    with tf.device("/device:GPU:0"):
+        model.fit(x=train_generator, \
+        validation_data=valid_generator, \
+        validation_steps=valid_steps, \
+        validation_freq=valid_freq, \
+        steps_per_epoch = train_steps, \
+        epochs=num_epochs, \
+        callbacks=[callbacks])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -81,9 +84,8 @@ if __name__ == "__main__":
     parser.add_argument("-bs", "--batch_size", type=int, default=1)
     parser.add_argument("-lr", "--learning_rate", type=int, default=1e-4)
     parser.add_argument("-d", "--data_dir", type=str, default=DATA_DIR)
-    parser.add_argument("-n", "--num_epochs", type=str, default=1000)
-    parser.add_argument("-f", "--valid_freq", type=int, default=5)
     parser.add_argument("-n", "--num_epochs", type=int, default=1000)
+    parser.add_argument("-f", "--valid_freq", type=int, default=5)
     parser.add_argument("-t", "--train_steps", type=int, default=2000)
     parser.add_argument("-v", "--valid_steps", type=int, default=400)
 
