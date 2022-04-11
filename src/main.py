@@ -57,7 +57,6 @@ def main(args):
     # Declare model architecture
     model = unet(input_size=MODEL_INPUT_SIZE)
 
-    # TODO: Test dice loss
     model.compile(optimizer=Adam(lr=learning_rate), loss=dice_loss)
 
     train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, batch_size=batch_size, patch_size=patch_size)
