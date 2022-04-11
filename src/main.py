@@ -60,7 +60,6 @@ def main(args):
     # TODO: compile model
     # TODO: Test dice loss
     model.compile(optimizer=Adam(lr=learning_rate), loss=dice_loss)
-    # TODO: Callbacks + model.fit
 
     train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, batch_size=batch_size, patch_size=patch_size)
     valid_generator = data_generator(ids=valid_ids, data_dir=VALID_DIR, batch_size=batch_size, patch_size=patch_size)
