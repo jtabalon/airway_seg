@@ -76,7 +76,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # TODO: Configure argument parser
+
     parser.add_argument("-bs", "--batch_size", type=int, default=1)
     parser.add_argument("-d", "--data_dir", type=str, default=DATA_DIR)
     parser.add_argument("-lr", "--learning_rate", type=float, default=1e-4)
