@@ -29,7 +29,6 @@ from model_architectures import unet
 def main(args):
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-    # TODO: hyperparameters
     # TODO: using json file
     # if args.use_json_file:
     #     json_file = str(args.use_json_file)
