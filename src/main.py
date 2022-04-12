@@ -39,6 +39,7 @@ def main(args):
     #         learning_rate = params["learning_rate"]
     #         num_epochs = params["num_epochs"]
     
+    # TODO: incorporate batch_size
     patch_size = args.patch_size
     batch_size = args.batch_size
     learning_rate = args.learning_rate
