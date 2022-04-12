@@ -8,6 +8,7 @@ def get_ids(path):
         ids = [line.rstrip() for line in file]
     return ids
 
+# TODO: assess batch_size param in data_generator
 def data_generator(ids, data_dir, batch_size=1, patch_size=64):
     while True:
         patch_distance = int(patch_size / 2)
