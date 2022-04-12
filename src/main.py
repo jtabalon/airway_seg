@@ -39,7 +39,6 @@ def main(args):
     #         learning_rate = params["learning_rate"]
     #         num_epochs = params["num_epochs"]
     
-    # TODO: incorporate batch_size
     patch_size = args.patch_size
     batch_size = args.batch_size
     learning_rate = args.learning_rate
@@ -59,20 +58,24 @@ def main(args):
 
     model.compile(optimizer=Adam(lr=learning_rate), loss=dice_loss)
 
-    train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, batch_size=batch_size, patch_size=patch_size)
-    valid_generator = data_generator(ids=valid_ids, data_dir=VALID_DIR, batch_size=batch_size, patch_size=patch_size)
+    # TODO: incorporate batch_size
+    train_generator = data_generator(ids=train_ids, data_dir=TRAIN_DIR, patch_size=patch_size)
+    valid_generator = data_generator(ids=valid_ids, data_dir=VALID_DIR, patch_size=patch_size)
 
     callbacks = [model_checkpoint_callback(CKPT_PATH), \
                 tensorboard_callback(CKPT_PATH), \
                 ]
 
+    # TODO: add batch_size param in model.fit
     with tf.device("/device:GPU:0"):
         model.fit(x=train_generator, \
+        batch_size=batch_size, \
         validation_data=valid_generator, \
         validation_steps=valid_steps, \
         validation_freq=valid_freq, \
         steps_per_epoch = train_steps, \
         epochs=num_epochs, \
+        shuffle=True, \
         callbacks=callbacks)
 
 if __name__ == "__main__":
@@ -81,7 +84,7 @@ if __name__ == "__main__":
     parser.add_argument("-bs", "--batch_size", type=int, default=1)
     parser.add_argument("-d", "--data_dir", type=str, default=DATA_DIR)
     parser.add_argument("-lr", "--learning_rate", type=float, default=1e-4)
-    parser.add_argument("-n", "--num_epochs", type=int, default=1000)
+    parser.add_argument("-n", "--num_epochs", type=int, default=100)
     parser.add_argument("-p", "--patch_size", type=int, default=64)
     parser.add_argument("-t", "--train_steps", type=int, default=2000)
     parser.add_argument("-json", '--use_json_file', type=str, default=PARAMS_PATH)
