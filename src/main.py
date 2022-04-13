@@ -66,10 +66,8 @@ def main(args):
                 tensorboard_callback(CKPT_PATH), \
                 ]
 
-    # TODO: add batch_size param in model.fit
     with tf.device("/device:GPU:0"):
         model.fit(x=train_generator, \
-        batch_size=batch_size, \
         validation_data=valid_generator, \
         validation_steps=valid_steps, \
         validation_freq=valid_freq, \
