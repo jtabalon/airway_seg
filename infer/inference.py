@@ -14,6 +14,11 @@ def main():
 
     # TODO: Iterate through image given patch size (start with 64)
 
+    # TODO: Stitch inferred images together
+
+
+    # TODO: Calculate dice metric.
+
     print(f"hello world")
 
 if __name__ == "__main__":
