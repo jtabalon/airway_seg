@@ -46,36 +46,38 @@ def main(self):
     rows_patchs = []
     col_patchs = []
     slice_patches = []
-    # to iterate through rows, add 64 to first midpoint
-    left = 0
-    patch = img[left]
-
-
-    
-
+    tot_patchs = []
     # TODO: Iterate through patches
 
-    # Columns
-    while patch_mid_col < column_dim:
-        # Rows
-        while patch_mid_row < row_dim:
-            row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-                    (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-                    (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
-            expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
-            print(expanded_row_patch.shape)
+    # Slices   
+    while patch_mid_slice < slice_dim:
+        # Columns
+        while patch_mid_col < column_dim:
+            # Rows
+            while patch_mid_row < row_dim:
+                row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+                expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
+                print(expanded_row_patch.shape)
 
-            rows_patchs.append(expanded_row_patch)
-            patch_mid_row += patch_size
+                rows_patchs.append(expanded_row_patch)
+                tot_patchs.append(expanded_row_patch)
+                patch_mid_row += patch_size
 
-        col_patchs.append(rows_patchs)
-        patch_mid_col += patch_size
+            col_patchs.append(rows_patchs)
+            patch_mid_col += patch_size
+
+        # col_patchs = np.array(col_patchs) Ask Kyle about ways to store this?
+        slice_patches.append(col_patchs)
+        patch_mid_slice += patch_size
 
 
-
-
+    print(len(tot_patchs))
+    print(np.shape(col_patchs))
     print(len(rows_patchs))
     print(len(col_patchs))
+    print(len(col_patchs[0]))
 
 
 
