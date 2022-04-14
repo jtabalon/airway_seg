@@ -32,6 +32,20 @@ def main(self):
     row_dim, column_dim, slice_dim  = img.shape[0], img.shape[1], img.shape[2]
     # print(img.shape)
 
+    # TODO: Work with only 1 patch.
+    num_row_patchs = int(row_dim / patch_size)
+    num_col_patchs = int(column_dim / patch_size)
+    num_slice_patchs = int(slice_dim / patch_size)
+
+    first_patch_midpoint = (patch_distance, patch_distance, patch_distance)
+
+    # to iterate through rows, add 64 to first midpoint
+    left = 0
+    patch = img[left]
+
+
+    
+
     # TODO: Iterate through patches
 
 
