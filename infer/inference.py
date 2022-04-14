@@ -67,7 +67,7 @@ def main(self):
     # and another array np.zeroes
     #                 
 
-    predicted_masks = np.zeros(shape=(row_dim,column_dim,slice_dim))
+    predicted_mask = np.zeros(shape=(row_dim,column_dim,slice_dim))
 
 
     # Gonna try Kyle's method now.
