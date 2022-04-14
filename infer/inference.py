@@ -10,7 +10,6 @@ from infer_constants import CKPT_PATH,TEST_IMG
 
 def main(self):
     # TODO: Configure arguments
-
     img_dir = args.image_dir
     patch_size = args.patch_size
     weights_path = args.weights_path
@@ -20,10 +19,6 @@ def main(self):
     # TODO: Load model + weights
 
     model = tf.keras.models.load_model(weights_path, compile=False)
-
-
-
-
 
     # TODO: Load image
     img = nib.load(img_dir).get_fdata() / 2000.
@@ -38,9 +33,7 @@ def main(self):
 
     first_patch_midpoint = (patch_distance, patch_distance, patch_distance)
 
-    patch_mid_row = patch_distance
-    patch_mid_col = patch_distance
-    patch_mid_slice = patch_distance
+    patch_mid_row, patch_mid_col, patch_mid_slice = patch_distance,patch_distance,patch_distance
 
     rows_patchs = []
     col_patchs = []
