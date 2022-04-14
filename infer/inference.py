@@ -30,7 +30,6 @@ def main(self):
     img = img[:,:,0:512] # Ask Kyle about how to handle this... original size is (512,512,654)
                          # How do we handle the excess z axis? z coordinate varies from img to img
     row_dim, column_dim, slice_dim  = img.shape[0], img.shape[1], img.shape[2]
-    # print(img.shape)
 
     # TODO: Work with only 1 patch.
     # num_row_patchs = int(row_dim / patch_size)
@@ -49,39 +48,60 @@ def main(self):
     tot_patchs = []
     # TODO: Iterate through patches
 
-    # Slices   
-    while patch_mid_slice < slice_dim:
-        # Columns
-        while patch_mid_col < column_dim:
-            # Rows
-            while patch_mid_row < row_dim:
+    # # Slices   
+    # while patch_mid_slice < slice_dim:
+    #     # Columns
+    #     while patch_mid_col < column_dim:
+    #         # Rows
+    #         while patch_mid_row < row_dim:
+    #             row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+    #                     (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+    #                     (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+    #             expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
+    #             print(expanded_row_patch.shape)
+
+    #             rows_patchs.append(expanded_row_patch)
+    #             tot_patchs.append(expanded_row_patch)
+    #             patch_mid_row += patch_size
+
+    #         col_patchs.append(rows_patchs)
+    #         patch_mid_col += patch_size
+
+    #     # col_patchs = np.array(col_patchs) Ask Kyle about ways to store this?
+    #     slice_patches.append(col_patchs)
+    #     patch_mid_slice += patch_size
+
+
+       
+    num_row_patchs = int(row_dim / patch_size)
+    num_col_patchs = int(column_dim / patch_size)
+    num_slice_patchs = int(slice_dim / patch_size)
+
+    for slice in range(num_slice_patchs):
+        for col in range(num_col_patchs):
+            for row in range(num_row_patchs):
                 row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
                 expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
-                print(expanded_row_patch.shape)
-
-                rows_patchs.append(expanded_row_patch)
-                tot_patchs.append(expanded_row_patch)
                 patch_mid_row += patch_size
-
-            col_patchs.append(rows_patchs)
+                rows_patchs.append(expanded_row_patch)
             patch_mid_col += patch_size
-
-        # col_patchs = np.array(col_patchs) Ask Kyle about ways to store this?
-        slice_patches.append(col_patchs)
+            # col_patchs.append(rows_patchs)
         patch_mid_slice += patch_size
+        # slice_patches.append(col_patchs)
+
+    # print(expanded_row_patch.shape)
+    # rows_patchs.append(expanded_row_patch)
+    # tot_patchs.append(expanded_row_patch)
 
 
-    print(len(tot_patchs))
-    print(np.shape(col_patchs))
+
+    # print(len(tot_patchs))
+    # print(np.shape(col_patchs))
     print(len(rows_patchs))
-    print(len(col_patchs))
-    print(len(col_patchs[0]))
-
-
-
-    
+    # print(len(col_patchs))
+    # print(len(col_patchs[0]))
 
     # TODO: Iterate through image given patch size (start with 64)
 
@@ -89,11 +109,7 @@ def main(self):
     inferred_img = model.predict(rows_patchs[0])
     print(inferred_img.shape)
 
-
-
     # TODO: Calculate dice metric.
-
-    print(f"hello world")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
