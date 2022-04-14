@@ -40,6 +40,8 @@ def main(self):
     first_patch_midpoint = (patch_distance, patch_distance, patch_distance)
 
     patch_mid_row = patch_distance
+    patch_mid_col = patch_distance
+    patch_mid_slice = patch_distance
 
     rows_patchs = []
     col_patchs = []
@@ -54,8 +56,12 @@ def main(self):
     # TODO: Iterate through patches
 
     # while midpoint < row_dim:
+    row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+            (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+            (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+    print(row_patch.shape)
 
-
+        # row_patchs.append()
         # patch_mid_row += patch_size
 
 
