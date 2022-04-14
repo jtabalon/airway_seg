@@ -15,6 +15,8 @@ def main(self):
     patch_size = args.patch_size
     weights_path = args.weights_path
 
+    patch_distance = int(patch_size / 2)
+
     # TODO: Load model + weights
 
     model = tf.keras.models.load_model(weights_path, compile=False)
@@ -28,9 +30,10 @@ def main(self):
     img = img[:,:,0:512] # Ask Kyle about how to handle this... original size is (512,512,654)
                          # How do we handle the excess z axis? z coordinate varies from img to img
     row_dim, column_dim, slice_dim  = img.shape[0], img.shape[1], img.shape[2]
-    print(img.shape)
+    # print(img.shape)
 
     # TODO: Iterate through patches
+
 
     
 
