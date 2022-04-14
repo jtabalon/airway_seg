@@ -55,14 +55,28 @@ def main(self):
 
     # TODO: Iterate through patches
 
-    # while midpoint < row_dim:
-    row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-            (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-            (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
-    print(row_patch.shape)
+    # Columns
+    while patch_mid_col < column_dim:
+        # Rows
+        while patch_mid_row < row_dim:
+            row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                    (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                    (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+            expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
+            print(expanded_row_patch.shape)
 
-        # row_patchs.append()
-        # patch_mid_row += patch_size
+            rows_patchs.append(expanded_row_patch)
+            patch_mid_row += patch_size
+
+        col_patchs.append(rows_patchs)
+        patch_mid_col += patch_size
+
+
+
+
+    print(len(rows_patchs))
+    print(len(col_patchs))
+
 
 
     
@@ -70,6 +84,9 @@ def main(self):
     # TODO: Iterate through image given patch size (start with 64)
 
     # TODO: Stitch inferred images together
+    inferred_img = model.predict(rows_patchs[0])
+    print(inferred_img.shape)
+
 
 
     # TODO: Calculate dice metric.
