@@ -77,6 +77,7 @@ def main(self):
                 row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+                
                 expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
                 patch_mid_row += patch_size
                 # rows_patchs.append(expanded_row_patch)
@@ -107,7 +108,7 @@ def main(self):
 #                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
 #                         + np.zeros(patch_size)
 
-                        # Finally mask/counts: averaged image
+                        # Finally mask divided by counts: averaged image
 
 #KYLES (above)
 
