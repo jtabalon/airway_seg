@@ -3,10 +3,9 @@ import argparse
 import numpy as np
 import tensorflow as tf
 import nibabel as nib
-from infer_constants import CKPT_PATH,TEST_IMG
-
 
 # Custom Imports
+from infer_constants import CKPT_PATH,TEST_IMG
 
 def main(self):
     # TODO: Configure arguments
@@ -16,20 +15,18 @@ def main(self):
 
     patch_distance = int(patch_size / 2)
 
-    # TODO: Load model + weights
-
-    model = tf.keras.models.load_model(weights_path, compile=False)
-
     # TODO: Load image
     img = nib.load(img_dir).get_fdata() / 2000.
     img = img[:,:,0:512] # Ask Kyle about how to handle this... original size is (512,512,654)
                          # How do we handle the excess z axis? z coordinate varies from img to img
     row_dim, column_dim, slice_dim  = img.shape[0], img.shape[1], img.shape[2]
 
+
+    # TODO: Initialize 2 working arrays (per Kyle's guidance)
+
+
+
     # TODO: Work with only 1 patch.
-    # num_row_patchs = int(row_dim / patch_size)
-    # num_col_patchs = int(column_dim / patch_size)
-    # num_slice_patchs = int(slice_dim / patch_size)
 
     first_patch_midpoint = (patch_distance, patch_distance, patch_distance)
 
@@ -63,12 +60,40 @@ def main(self):
     #     # col_patchs = np.array(col_patchs) Ask Kyle about ways to store this?
     #     slice_patches.append(col_patchs)
     #     patch_mid_slice += patch_size
-
-
        
-    num_row_patchs = int(row_dim / patch_size)
-    num_col_patchs = int(column_dim / patch_size)
-    num_slice_patchs = int(slice_dim / patch_size)
+    num_row_patchs, num_col_patchs, num_slice_patchs = int(row_dim / patch_size), \
+                                                       int(column_dim / patch_size), \
+                                                       int(slice_dim / patch_size)
+
+    # create extra array size of image
+    # and another array np.zeroes
+    #                 
+
+# KYLES (below)
+
+#                         mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+#                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+#                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+#                         = mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+#                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+#                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+#                         + mask_pred[] #from model.predict
+
+
+
+# counts and masks are all zeros of size img.
+
+#                         counts[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+#                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+#                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+#                         = counts[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+#                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+#                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+#                         + np.zeros(patch_size)
+
+                        # Finally mask/counts: averaged image
+
+#KYLES (above)
 
     for slice in range(num_slice_patchs):
         for col in range(num_col_patchs):
@@ -88,8 +113,6 @@ def main(self):
     # rows_patchs.append(expanded_row_patch)
     # tot_patchs.append(expanded_row_patch)
 
-
-
     # print(len(tot_patchs))
     # print(np.shape(col_patchs))
     print(len(rows_patchs))
@@ -97,6 +120,9 @@ def main(self):
     # print(len(col_patchs[0]))
 
     # TODO: Iterate through image given patch size (start with 64)
+
+    # TODO: Load model + weights
+    model = tf.keras.models.load_model(weights_path, compile=False)
 
     # TODO: Stitch inferred images together
     inferred_img = model.predict(rows_patchs[0])
