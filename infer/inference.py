@@ -24,8 +24,6 @@ def main(self):
 
     # TODO: Initialize 2 working arrays (per Kyle's guidance)
 
-
-
     # TODO: Work with only 1 patch.
 
     first_patch_midpoint = (patch_distance, patch_distance, patch_distance)
@@ -69,6 +67,24 @@ def main(self):
     # and another array np.zeroes
     #                 
 
+    predicted_masks = np.zeros(shape=(row_dim,column_dim,slice_dim))
+
+
+    # Gonna try Kyle's method now.
+    for slice in range(num_slice_patchs):
+        for col in range(num_col_patchs):
+            for row in range(num_row_patchs):
+                row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+                expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
+                patch_mid_row += patch_size
+                # rows_patchs.append(expanded_row_patch)
+            patch_mid_col += patch_size
+            # col_patchs.append(rows_patchs)
+        patch_mid_slice += patch_size
+        # slice_patches.append(col_patchs)
+
 # KYLES (below)
 
 #                         mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
@@ -94,6 +110,7 @@ def main(self):
                         # Finally mask/counts: averaged image
 
 #KYLES (above)
+
 
     for slice in range(num_slice_patchs):
         for col in range(num_col_patchs):
