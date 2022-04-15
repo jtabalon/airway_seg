@@ -30,22 +30,32 @@ def main(args):
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     # TODO: using json file
-    # if args.use_json_file:
-    #     json_file = str(args.use_json_file)
-    #     with open(json_file, "r") as read_file:
-    #         params = json.load(read_file)
-    #         patch_size = params["patch_size"]
-    #         batch_size = params["batch_size"]
-    #         learning_rate = params["learning_rate"]
-    #         num_epochs = params["num_epochs"]
-    
-    patch_size = args.patch_size
-    batch_size = args.batch_size
-    learning_rate = args.learning_rate
-    num_epochs = args.num_epochs
-    train_steps = args.train_steps
-    valid_freq = args.valid_freq
-    valid_steps = args.valid_steps
+    if args.use_json_file:
+        json_file = str(args.use_json_file)
+        file = open(json_file)
+        params = json.load(file)
+        patch_size = params["patch_size"]
+        batch_size = params["batch_size"]
+        learning_rate = params["learning_rate"]
+        num_epochs = params["num_epochs"]
+        train_steps = params["train_steps"]
+        valid_freq = params["valid_freq"]
+        valid_steps = params["valid_steps"]
+        # json_file = str(args.use_json_file)
+        # with open(json_file, "r") as read_file:
+        #     params = json.load(read_file)
+        #     patch_size = params["patch_size"]
+        #     batch_size = params["batch_size"]
+        #     learning_rate = params["learning_rate"]
+        #     num_epochs = params["num_epochs"]
+    else:
+        patch_size = args.patch_size
+        batch_size = args.batch_size
+        learning_rate = args.learning_rate
+        num_epochs = args.num_epochs
+        train_steps = args.train_steps
+        valid_freq = args.valid_freq
+        valid_steps = args.valid_steps
 
     print(patch_size, batch_size, learning_rate, num_epochs, train_steps, valid_freq, valid_steps)
 
