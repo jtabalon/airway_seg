@@ -7,7 +7,7 @@ VALID_DIR = "/home/jtabalon/airway_seg_data/valid"
 DATA_DIR = "/home/jtabalon/airway_seg_data/"
 
 PARAMS_PATH = "/home/jtabalon/airway_seg/params.json"
-CKPT_PATH = "/home/jtabalon/airway_seg/run2_bs_2"
+CKPT_PATH = "/home/jtabalon/airway_seg/checkpoints/ckpt_airway_seg"
 
 # inference
 TEST_IMG = "/home/jtabalon/airway_seg_data/test/ct/ct_patients10006S.nii"

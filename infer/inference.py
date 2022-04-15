@@ -3,11 +3,14 @@ import argparse
 import numpy as np
 import tensorflow as tf
 import nibabel as nib
+import os
 
 # Custom Imports
 from infer_constants import CKPT_PATH,TEST_IMG
 
 def main(self):
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     # TODO: Configure arguments
     img_dir = args.image_dir
     patch_size = args.patch_size
@@ -67,6 +70,10 @@ def main(self):
     # and another array np.zeroes
     #                 
 
+    model = tf.keras.models.load_model(weights_path, compile=False)
+
+    # inferred_img = model.predict(rows_patchs[0])
+
     predicted_mask = np.zeros(shape=(row_dim,column_dim,slice_dim))
 
 
@@ -77,10 +84,19 @@ def main(self):
                 row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
-                
                 expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
+                with tf.device("/device:GPU:0"):
+                    inferred_patch = np.squeeze(model.predict(expanded_row_patch))
+                print(np.shape(inferred_patch))
+                print(patch_mid_row, patch_mid_col, patch_mid_slice)
+                predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] = inferred_patch
+
+
                 patch_mid_row += patch_size
                 # rows_patchs.append(expanded_row_patch)
+            print("col")
             patch_mid_col += patch_size
             # col_patchs.append(rows_patchs)
         patch_mid_slice += patch_size
@@ -113,18 +129,18 @@ def main(self):
 #KYLES (above)
 
 
-    for slice in range(num_slice_patchs):
-        for col in range(num_col_patchs):
-            for row in range(num_row_patchs):
-                row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
-                expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
-                patch_mid_row += patch_size
-                rows_patchs.append(expanded_row_patch)
-            patch_mid_col += patch_size
-            # col_patchs.append(rows_patchs)
-        patch_mid_slice += patch_size
+    # for slice in range(num_slice_patchs):
+    #     for col in range(num_col_patchs):
+    #         for row in range(num_row_patchs):
+    #             row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+    #                     (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+    #                     (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
+    #             expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
+    #             patch_mid_row += patch_size
+    #             rows_patchs.append(expanded_row_patch)
+    #         patch_mid_col += patch_size
+    #         # col_patchs.append(rows_patchs)
+    #     patch_mid_slice += patch_size
         # slice_patches.append(col_patchs)
 
     # print(expanded_row_patch.shape)
@@ -133,18 +149,18 @@ def main(self):
 
     # print(len(tot_patchs))
     # print(np.shape(col_patchs))
-    print(len(rows_patchs))
+    # print(len(rows_patchs))
     # print(len(col_patchs))
     # print(len(col_patchs[0]))
 
     # TODO: Iterate through image given patch size (start with 64)
 
     # TODO: Load model + weights
-    model = tf.keras.models.load_model(weights_path, compile=False)
+    # model = tf.keras.models.load_model(weights_path, compile=False)
 
     # TODO: Stitch inferred images together
-    inferred_img = model.predict(rows_patchs[0])
-    print(inferred_img.shape)
+    # inferred_img = model.predict(rows_patchs[0])
+    # print(inferred_img.shape)
 
     # TODO: Calculate dice metric.
 
