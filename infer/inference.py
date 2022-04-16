@@ -80,7 +80,7 @@ def main(self):
     # Gonna try Kyle's method now.
     for slice in range(num_slice_patchs):
         for col in range(num_col_patchs):
-            for row in range(num_row_patchs):
+            for patch in range(num_row_patchs):
                 row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
@@ -103,6 +103,9 @@ def main(self):
         # slice_patches.append(col_patchs)
 
 # KYLES (below)
+# counts and masks are all zeros of size img.
+
+                        # mask = np.zeros(img.shape)
 
 #                         mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
 #                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
@@ -112,9 +115,7 @@ def main(self):
 #                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
 #                         + mask_pred[] #from model.predict
 
-
-
-# counts and masks are all zeros of size img.
+                        # counts = np.zeros(img.shape)
 
 #                         counts[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
 #                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
@@ -122,7 +123,9 @@ def main(self):
 #                         = counts[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
 #                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
 #                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
-#                         + np.zeros(patch_size)
+#                         + np.ones(patch_size)
+
+                        # final mask = mask / counts
 
                         # Finally mask divided by counts: averaged image
 
