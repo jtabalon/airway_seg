@@ -24,8 +24,6 @@ def main(self):
                          # How do we handle the excess z axis? z coordinate varies from img to img
     row_dim, column_dim, slice_dim  = img.shape[0], img.shape[1], img.shape[2]
 
-
-
     # TODO: Work with only 1 patch.
 
     first_patch_midpoint = (patch_distance, patch_distance, patch_distance)
@@ -67,7 +65,6 @@ def main(self):
 
     # create extra array size of image
     # and another array np.zeroes
-    #                 
 
     model = tf.keras.models.load_model(weights_path, compile=False)
 
@@ -90,23 +87,20 @@ def main(self):
                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
                 # Expand dims (necessary for model prediction)
                 print(f"patch shape: {np.shape(row_patch)}")
-                if np.shape(row_patch)[0] != 0:
-                    expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
-                    print(f"expanded patch shape: {np.shape(expanded_row_patch)}")
-                    # Make prediction
-                    with tf.device("/device:GPU:0"):
-                        inferred_patch = np.squeeze(model.predict(expanded_row_patch))
-                    print(f"inferred patch shape: {np.shape(inferred_patch)}")
-                    print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
-                    print("\n")
-                    predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-                            (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-                            (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] = predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-                            (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-                            (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] + \
-                                inferred_patch 
-                else:
-                    continue
+                expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
+                print(f"expanded patch shape: {np.shape(expanded_row_patch)}")
+                # Make prediction
+                with tf.device("/device:GPU:0"):
+                    inferred_patch = np.squeeze(model.predict(expanded_row_patch))
+                print(f"inferred patch shape: {np.shape(inferred_patch)}")
+                print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
+                print("\n")
+                predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] = predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] + \
+                            inferred_patch 
                 # predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                 #         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                 #         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] = inferred_patch
@@ -114,7 +108,6 @@ def main(self):
 
                 # print("row")
                 patch_mid_row += patch_size
-                counts += 1
                 # rows_patchs.append(expanded_row_patch)
             # print("col")
             patch_mid_col += patch_size
