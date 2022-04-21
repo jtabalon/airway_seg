@@ -123,9 +123,9 @@ def main(self):
         if patch_mid_slice < slice_dim - patch_distance:
             patch_mid_slice += patch_size
     
-    mean_mask = predicted_mask / counts
+    # mean_mask = predicted_mask / counts
     print(count_patchs)
-    print(np.mean(mean_mask), np.shape(mean_mask))
+    # print(np.mean(mean_mask), np.shape(mean_mask))
 
 # KYLES (below)
 # counts and masks are all zeros of size img.
