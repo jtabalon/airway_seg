@@ -117,6 +117,8 @@ def main(self):
                 if patch_mid_row < row_dim - patch_distance:
                     print(patch_mid_row)
                     patch_mid_row += patch_size
+                else:
+                    patch_mid_row = patch_distance
                 count_patchs += 1
             if patch_mid_col < column_dim - patch_distance:
                 patch_mid_col += patch_size
