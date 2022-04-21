@@ -71,21 +71,21 @@ def main(self):
         for col in range(num_col_patchs):
             for patch in range(num_row_patchs):
                 # Extract patch
-                print(f"slice: {slice}")
-                print(f"col: {col}")
-                print(f"patch: {patch}")
+                # print(f"slice: {slice}")
+                # print(f"col: {col}")
+                # print(f"patch: {patch}")
                 print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
                 row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
                 # Expand dims (necessary for model prediction)
-                print(f"patch shape: {np.shape(row_patch)}")
+                # print(f"patch shape: {np.shape(row_patch)}")
                 expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
-                print(f"expanded patch shape: {np.shape(expanded_row_patch)}")
+                # print(f"expanded patch shape: {np.shape(expanded_row_patch)}")
                 # Make prediction
                 with tf.device("/device:GPU:0"):
                     inferred_patch = np.squeeze(model.predict(expanded_row_patch))
-                    print(f"inferred patch shape: {np.shape(inferred_patch)}")
+                    # print(f"inferred patch shape: {np.shape(inferred_patch)}")
                     print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
                     print("\n")
                     predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
@@ -105,7 +105,7 @@ def main(self):
                         + np.ones(shape=(patch_size,patch_size,patch_size))
 
                 if patch_mid_row < row_dim - patch_distance:
-                    print(patch_mid_row)
+                    # print(patch_mid_row)
                     patch_mid_row += patch_size
                 else:
                     patch_mid_row = patch_distance
