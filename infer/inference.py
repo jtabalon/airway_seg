@@ -63,6 +63,8 @@ def main(self):
                                                        int(column_dim / patch_size), \
                                                        int(slice_dim / patch_size)
 
+    print(f"rows: {num_row_patchs} cols: {num_col_patchs} slices: {num_slice_patchs}  ")
+
     # create extra array size of image
     # and another array np.zeroes
 
@@ -82,6 +84,7 @@ def main(self):
                 print(f"slice: {slice}")
                 print(f"col: {col}")
                 print(f"patch: {patch}")
+                print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
                 row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
@@ -92,28 +95,24 @@ def main(self):
                 # Make prediction
                 with tf.device("/device:GPU:0"):
                     inferred_patch = np.squeeze(model.predict(expanded_row_patch))
-                print(f"inferred patch shape: {np.shape(inferred_patch)}")
-                print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
-                print("\n")
-                predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] = predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] + \
-                            inferred_patch 
-                # predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-                #         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-                #         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] = inferred_patch
-
-
-                # print("row")
-                patch_mid_row += patch_size
-                # rows_patchs.append(expanded_row_patch)
-            # print("col")
-            patch_mid_col += patch_size
-            # col_patchs.append(rows_patchs)
-        patch_mid_slice += patch_size
-        # slice_patches.append(col_patchs)
+                    print(f"inferred patch shape: {np.shape(inferred_patch)}")
+                    print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
+                    print("\n")
+                    predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                            (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                            (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] = \
+                            predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                            (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                            (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] + \
+                                inferred_patch 
+                if patch_mid_row < row_dim - patch_distance:
+                    print(patch_mid_row)
+                    patch_mid_row += patch_size
+                counts += 1
+            if patch_mid_col < column_dim - patch_distance:
+                patch_mid_col += patch_size
+        if patch_mid_slice < slice_dim - patch_distance:
+            patch_mid_slice += patch_size
     
     print(counts)
 
