@@ -58,13 +58,13 @@ def main(self):
 
     print(f"rows: {num_row_patchs} cols: {num_col_patchs} slices: {num_slice_patchs}  ")
 
-    # create extra array size of image
-    # and another array np.zeroes
 
     model = tf.keras.models.load_model(weights_path, compile=False)
 
     predicted_mask = np.zeros(shape=(row_dim,column_dim,slice_dim))
     counts = np.zeros(shape=(row_dim,column_dim,slice_dim))
+
+    #TODO: Configure padding
 
     count_patchs = 0
     for slice in range(num_slice_patchs):
