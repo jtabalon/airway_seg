@@ -16,6 +16,7 @@ def main(self):
     patch_size = args.patch_size
     weights_path = args.weights_path
 
+    # Vars
     patch_distance = int(patch_size / 2)
 
     # TODO: Load image
@@ -24,16 +25,8 @@ def main(self):
                          # How do we handle the excess z axis? z coordinate varies from img to img
     row_dim, column_dim, slice_dim  = img.shape[0], img.shape[1], img.shape[2]
 
-    # TODO: Work with only 1 patch.
-
-    first_patch_midpoint = (patch_distance, patch_distance, patch_distance)
-
     patch_mid_row, patch_mid_col, patch_mid_slice = patch_distance,patch_distance,patch_distance
 
-    rows_patchs = []
-    col_patchs = []
-    slice_patches = []
-    tot_patchs = []
     # TODO: Iterate through patches
 
     # # Slices   
@@ -70,12 +63,9 @@ def main(self):
 
     model = tf.keras.models.load_model(weights_path, compile=False)
 
-    # TODO: Initialize 2 working arrays (per Kyle's guidance)
-
     predicted_mask = np.zeros(shape=(row_dim,column_dim,slice_dim))
     counts = np.zeros(shape=(row_dim,column_dim,slice_dim))
 
-    # Gonna try Kyle's method now.
     count_patchs = 0
     for slice in range(num_slice_patchs):
         for col in range(num_col_patchs):
@@ -125,9 +115,9 @@ def main(self):
         if patch_mid_slice < slice_dim - patch_distance:
             patch_mid_slice += patch_size
     
-    # mean_mask = predicted_mask / counts
+    mean_mask = predicted_mask / counts
     print(count_patchs)
-    # print(np.mean(mean_mask), np.shape(mean_mask))
+    print(np.mean(mean_mask), np.shape(mean_mask))
 
 # KYLES (below)
 # counts and masks are all zeros of size img.
