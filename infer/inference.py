@@ -148,40 +148,6 @@ def main(self):
 
 #KYLES (above)
 
-
-    # for slice in range(num_slice_patchs):
-    #     for col in range(num_col_patchs):
-    #         for row in range(num_row_patchs):
-    #             row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
-    #                     (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
-    #                     (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
-    #             expanded_row_patch = np.expand_dims(np.expand_dims(row_patch, -1), 0)
-    #             patch_mid_row += patch_size
-    #             rows_patchs.append(expanded_row_patch)
-    #         patch_mid_col += patch_size
-    #         # col_patchs.append(rows_patchs)
-    #     patch_mid_slice += patch_size
-        # slice_patches.append(col_patchs)
-
-    # print(expanded_row_patch.shape)
-    # rows_patchs.append(expanded_row_patch)
-    # tot_patchs.append(expanded_row_patch)
-
-    # print(len(tot_patchs))
-    # print(np.shape(col_patchs))
-    # print(len(rows_patchs))
-    # print(len(col_patchs))
-    # print(len(col_patchs[0]))
-
-    # TODO: Iterate through image given patch size (start with 64)
-
-    # TODO: Load model + weights
-    # model = tf.keras.models.load_model(weights_path, compile=False)
-
-    # TODO: Stitch inferred images together
-    # inferred_img = model.predict(rows_patchs[0])
-    # print(inferred_img.shape)
-
     # TODO: Calculate dice metric.
 
 if __name__ == "__main__":
