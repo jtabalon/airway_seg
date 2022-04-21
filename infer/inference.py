@@ -27,8 +27,6 @@ def main(self):
 
     patch_mid_row, patch_mid_col, patch_mid_slice = patch_distance,patch_distance,patch_distance
 
-    # TODO: Iterate through patches
-
     # # Slices   
     # while patch_mid_slice < slice_dim:
     #     # Columns
@@ -58,7 +56,6 @@ def main(self):
 
     print(f"rows: {num_row_patchs} cols: {num_col_patchs} slices: {num_slice_patchs}  ")
 
-
     model = tf.keras.models.load_model(weights_path, compile=False)
 
     predicted_mask = np.zeros(shape=(row_dim,column_dim,slice_dim))
@@ -75,6 +72,7 @@ def main(self):
                 # print(f"col: {col}")
                 # print(f"patch: {patch}")
                 print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
+                print("\n")
                 row_patch = img[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                         (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                         (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)]
@@ -86,8 +84,6 @@ def main(self):
                 with tf.device("/device:GPU:0"):
                     inferred_patch = np.squeeze(model.predict(expanded_row_patch))
                     # print(f"inferred patch shape: {np.shape(inferred_patch)}")
-                    print(f"patch midpoint location: {patch_mid_row, patch_mid_col, patch_mid_slice}")
-                    print("\n")
                     predicted_mask[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
                             (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                             (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] = \
