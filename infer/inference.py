@@ -76,7 +76,7 @@ def main(self):
     counts = np.zeros(shape=(row_dim,column_dim,slice_dim))
 
     # Gonna try Kyle's method now.
-    counts = 0
+    count_patchs = 0
     for slice in range(num_slice_patchs):
         for col in range(num_col_patchs):
             for patch in range(num_row_patchs):
@@ -105,16 +105,27 @@ def main(self):
                             (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
                             (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] + \
                                 inferred_patch 
+
+                counts[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] \
+                        = counts[(patch_mid_row-patch_distance):(patch_mid_row+patch_distance), \
+                        (patch_mid_col-patch_distance):(patch_mid_col+patch_distance), \
+                        (patch_mid_slice-patch_distance):(patch_mid_slice+patch_distance)] \
+                        + np.ones(shape=(patch_size,patch_size,patch_size))
+
                 if patch_mid_row < row_dim - patch_distance:
                     print(patch_mid_row)
                     patch_mid_row += patch_size
-                counts += 1
+                count_patchs += 1
             if patch_mid_col < column_dim - patch_distance:
                 patch_mid_col += patch_size
         if patch_mid_slice < slice_dim - patch_distance:
             patch_mid_slice += patch_size
     
-    print(counts)
+    mean_mask = predicted_mask / counts
+    print(count_patchs)
+    print(np.mean(mean_mask), np.shape(mean_mask))
 
 # KYLES (below)
 # counts and masks are all zeros of size img.
